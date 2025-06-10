@@ -7,7 +7,7 @@ import {
   RedirectToSignIn,
 } from '@clerk/clerk-react';
 import Router from './routes/Router';
-import Sidebar from './components/SideBar';
+import SideBar from './components/SideBar';
 import Navbar from './components/Navbar';
 
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -24,16 +24,20 @@ const App = () => {
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <div>
-        <main>
+        <main className="flex min-h-screen">
           <SignedIn>
-            {!isHomePage && <Sidebar />}
-            <div className="main-content">
+            {!isHomePage && <SideBar />}
+            <div
+              className={`main-content flex-1 ${
+                !isHomePage ? 'p-6 md:ml-64' : 'p-0'
+              } bg-gray-900`}
+            >
               <Router />
             </div>
           </SignedIn>
           <SignedOut>
             {isHomePage ? (
-              <div className="main-content">
+              <div className="main-content flex-1 p-4 bg-gray-900">
                 <Router />
               </div>
             ) : (
