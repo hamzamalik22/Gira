@@ -1,7 +1,7 @@
 import React from 'react';
 import TaskForm from './TaskForm';
 
-const TaskModal = ({ isOpen, task, onSave, onClose }) => {
+const TaskModal = ({ isOpen, task, onSave, onClose, projectId = null }) => {
   if (!isOpen) return null;
 
   return (
@@ -10,7 +10,7 @@ const TaskModal = ({ isOpen, task, onSave, onClose }) => {
         <h2 className="text-xl font-bold text-white mb-4">
           {task ? 'Edit Task' : 'Create Task'}
         </h2>
-        <TaskForm task={task} onSubmit={onSave} onCancel={onClose} />
+        <TaskForm task={task} onSubmit={onSave} onCancel={onClose} projectId={projectId} />
       </div>
     </div>
   );

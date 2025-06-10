@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useProjects } from '../context/ProjectContext';
 
-const TaskForm = ({ task, onSubmit, onCancel }) => {
+const TaskForm = ({ task, onSubmit, onCancel, projectId = null }) => {
+  const { projects } = useProjects();
   const [formData, setFormData] = useState({
     title: task?.title || '',
     description: task?.description || '',
     assignee: task?.assignee || '',
     priority: task?.priority || 'Medium',
+    projectId: task?.projectId || projectId || '',
   });
 
   useEffect(() => {
@@ -15,6 +18,7 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
         description: task.description,
         assignee: task.assignee,
         priority: task.priority,
+        projectId: task.projectId || '',
       });
     }
   }, [task]);
@@ -26,7 +30,14 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    // For personal todos, don't include projectId if it's empty
+    const submitData = { ...formData };
+    if (projectId === null && !submitData.projectId) {
+      delete submitData.projectId;
+    }
+    
+    onSubmit(submitData);
   };
 
   return (
@@ -58,6 +69,27 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
           rows="4"
         />
       </div>
+      {projectId === null && (
+        <div>
+          <label className="block text-sm text-gray-300 mb-1" htmlFor="projectId">
+            Project (Optional)
+          </label>
+          <select
+            id="projectId"
+            name="projectId"
+            value={formData.projectId}
+            onChange={handleChange}
+            className="w-full p-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="">Personal Todo (No Project)</option>
+            {projects.map((project) => (
+              <option key={project.id} value={project.id}>
+                {project.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       <div>
         <label className="block text-sm text-gray-300 mb-1" htmlFor="assignee">
           Assignee

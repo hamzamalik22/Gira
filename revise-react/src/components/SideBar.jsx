@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
-import { HomeIcon, KanbanIcon, PlusCircleIcon, FolderIcon } from 'lucide-react';
+import { HomeIcon, CheckSquare, FolderIcon } from 'lucide-react';
 
 const SideBar = () => {
   const { user } = useUser();
@@ -54,7 +54,7 @@ const SideBar = () => {
           </li>
           <li>
             <NavLink
-              to="/kanban"
+              to="/todos"
               className={({ isActive }) =>
                 `flex items-center space-x-3 p-3 rounded-lg transition-colors ${
                   isActive
@@ -63,23 +63,8 @@ const SideBar = () => {
                 }`
               }
             >
-              <KanbanIcon className="w-5 h-5" />
-              <span>Kanban Board</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/create-task"
-              className={({ isActive }) =>
-                `flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-                  isActive
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-200 hover:bg-gray-700 hover:text-blue-400'
-                }`
-              }
-            >
-              <PlusCircleIcon className="w-5 h-5" />
-              <span>Create Task</span>
+              <CheckSquare className="w-5 h-5" />
+              <span>Todos</span>
             </NavLink>
           </li>
           <li>

@@ -14,8 +14,7 @@ const HomePage = () => {
                         {isSignedIn ? (
                             <>
                                 <Link to="/dashboard" className="hover:text-blue-400 transition">Dashboard</Link>
-                                <Link to="/kanban" className="hover:text-blue-400 transition">Kanban Board</Link>
-                                <Link to="/create-task" className="hover:text-blue-400 transition">Create Task</Link>
+                                <Link to="/todos" className="hover:text-blue-400 transition">Todos</Link>
                                 <Link to="/projects" className="hover:text-blue-400 transition">Projects</Link>
                                 <span className="text-white">Welcome, {user.username || user.firstName || 'User'}</span>
                                 <UserButton />
@@ -24,8 +23,7 @@ const HomePage = () => {
                         ) : (
                             <>
                                 <Link to="/dashboard" className="hover:text-blue-400 transition">Dashboard</Link>
-                                <Link to="/kanban" className="hover:text-blue-400 transition">Kanban Board</Link>
-                                <Link to="/create-task" className="hover:text-blue-400 transition">Create Task</Link>
+                                <Link to="/todos" className="hover:text-blue-400 transition">Todos</Link>
                                 <Link to="/projects" className="hover:text-blue-400 transition">Projects</Link>
                                 <Link to="/login" className="hover:text-blue-400 transition">Login</Link>
                             </>
@@ -41,7 +39,7 @@ const HomePage = () => {
                         Empower Your Team with Gira
                     </h1>
                     <p className="text-lg md:text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
-                        Take control of your projects with our intuitive Kanban boards, powerful task management, and seamless collaboration tools. Boost productivity and streamline workflows today.
+                        Take control of your projects with our intuitive project boards, powerful task management, and seamless collaboration tools. Boost productivity and streamline workflows today.
                     </p>
                     <div className="space-x-4">
                         <Link
@@ -67,7 +65,7 @@ const HomePage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
                             <div className="text-4xl text-blue-400 mb-4">📋</div>
-                            <h3 className="text-xl font-semibold text-white mb-2">Interactive Kanban Board</h3>
+                            <h3 className="text-xl font-semibold text-white mb-2">Personal Todos & Project Boards</h3>
                             <p className="text-gray-400">
                                 Drag-and-drop tasks across customizable columns to visualize and manage your workflow effortlessly.
                             </p>
@@ -104,7 +102,7 @@ const HomePage = () => {
                             <div className="text-4xl text-blue-400 mb-4">⚙️</div>
                             <h3 className="text-xl font-semibold text-white mb-2">Custom Workflows</h3>
                             <p className="text-gray-400">
-                                Tailor workflows to your team’s needs with flexible status and priority settings.
+                                Tailor workflows to your team's needs with flexible status and priority settings.
                             </p>
                         </div>
                     </div>
@@ -118,7 +116,7 @@ const HomePage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
                             <p className="text-gray-300 italic mb-4">
-                                "Gira transformed our team’s productivity. The Kanban board is intuitive, and the dashboard gives us clear insights."
+                                "Gira transformed our team's productivity. The project boards are intuitive, and the dashboard gives us clear insights."
                             </p>
                             <p className="text-blue-400 font-semibold">– Sarah M., Project Manager</p>
                         </div>
@@ -181,8 +179,7 @@ const HomePage = () => {
                             <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
                             <ul className="space-y-2">
                                 <li><Link to="/dashboard" className="hover:text-blue-400">Dashboard</Link></li>
-                                <li><Link to="/kanban" className="hover:text-blue-400">Kanban Board</Link></li>
-                                <li><Link to="/create-task" className="hover:text-blue-400">Create Task</Link></li>
+                                <li><Link to="/todos" className="hover:text-blue-400">Todos</Link></li>
                                 <li><Link to="/projects" className="hover:text-blue-400">Projects</Link></li>
                             </ul>
                         </div>
@@ -198,12 +195,10 @@ const HomePage = () => {
                         <div>
                             <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
                             <p className="text-gray-400">Email: support@Gira.com</p>
-                            <p className="text-gray-400">Phone: (123) 456-7890</p>
-                            <p className="text-gray-400">Address: 123 Productivity Lane, Tech City</p>
                         </div>
                     </div>
-                    <div className="mt-8 text-center">
-                        <p>© 2025 Gira. All rights reserved.</p>
+                    <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+                        <p className="text-gray-400">&copy; 2025 Gira. All rights reserved.</p>
                     </div>
                 </div>
             </footer>
