@@ -27,28 +27,36 @@ const App = () => {
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <ProjectProvider>
         <TaskProvider>
-          <div>
-            <main className="flex min-h-screen">
-              <SignedIn>
-                {!isHomePage && <SideBar />}
-                <div
-                  className={`main-content flex-1 ${
-                    !isHomePage ? 'p-6 md:ml-64' : 'p-0'
-                  } bg-gray-900`}
-                >
-                  <Router />
-                </div>
-              </SignedIn>
-              <SignedOut>
-                {isHomePage ? (
-                  <div className="main-content flex-1 p-4 bg-gray-900">
-                    <Router />
+          <div className="h-screen bg-gray-50 dark:bg-gray-900">
+            <SignedIn>
+              {!isHomePage && (
+                <>
+                  <Navbar />
+                  <div className="flex h-[calc(100vh-64px)]">
+                    <SideBar />
+                    <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+                      <div className="p-6">
+                        <Router />
+                      </div>
+                    </main>
                   </div>
-                ) : (
-                  <RedirectToSignIn />
-                )}
-              </SignedOut>
-            </main>
+                </>
+              )}
+              {isHomePage && (
+                <main className="w-full">
+                  <Router />
+                </main>
+              )}
+            </SignedIn>
+            <SignedOut>
+              {isHomePage ? (
+                <main className="w-full">
+                  <Router />
+                </main>
+              ) : (
+                <RedirectToSignIn />
+              )}
+            </SignedOut>
           </div>
         </TaskProvider>
       </ProjectProvider>
