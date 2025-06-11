@@ -12,9 +12,7 @@ const Navbar = () => {
       {/* Left Section - Logo & Navigation */}
       <div className="flex items-center space-x-8">
         <Link to="/dashboard" className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-            <span className="text-white font-bold text-sm">G</span>
-          </div>
+          <img src="/Gira.svg" alt="Gira Logo" className="h-8 w-auto dark:invert dark:brightness-0 dark:contrast-200" />
           <span className="text-xl font-semibold text-gray-900 dark:text-white">Gira</span>
         </Link>
         

@@ -12,7 +12,7 @@ const HomePage = () => {
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center space-x-8">
                         <Link to="/" className="text-2xl font-bold text-blue-400 flex items-center space-x-2">
-                            <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white font-bold">G</div>
+                            <img src="/Gira.svg" alt="Gira Logo" className="h-8 w-auto dark:invert dark:brightness-0 dark:contrast-200" />
                             <span>Gira</span>
                         </Link>
                         <div className="hidden md:flex items-center space-x-6 text-sm">
@@ -336,7 +336,7 @@ const HomePage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
                         <div className="lg:col-span-2">
                             <div className="flex items-center space-x-2 mb-4">
-                                <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white font-bold">G</div>
+                                <img src="/Gira.svg" alt="Gira Logo" className="h-8 w-auto dark:invert dark:brightness-0 dark:contrast-200" />
                                 <span className="text-2xl font-bold text-white">Gira</span>
                             </div>
                             <p className="text-gray-400 mb-6 max-w-md">

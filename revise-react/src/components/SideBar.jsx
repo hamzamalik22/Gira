@@ -42,9 +42,7 @@ const SideBar = () => {
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <button className="w-full flex items-center justify-between p-2 text-left text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors">
           <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
-              <span className="text-white text-xs font-bold">P</span>
-            </div>
+            <img src="/Gira.svg" alt="Gira Logo" className="h-6 w-auto dark:invert dark:brightness-0 dark:contrast-200" />
             <span>Personal Workspace</span>
           </div>
           <ChevronDown className="w-4 h-4 text-gray-400" />

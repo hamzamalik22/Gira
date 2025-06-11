@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProjects } from '../context/ProjectContext';
 import { useTasks } from '../context/TaskContext';
 import { useUser } from '@clerk/clerk-react';
+import ConfirmModal from '../components/ConfirmModal';
 import { 
   Clock, 
   CheckCircle, 
@@ -12,13 +13,21 @@ import {
   User,
   ArrowRight,
   MoreHorizontal,
-  ChevronRight
+  ChevronRight,
+  Trash2,
+  Edit,
+  Eye,
+  CheckSquare,
+  XCircle
 } from 'lucide-react';
 
 const Dashboard = () => {
   const { user } = useUser();
   const { projects } = useProjects();
-  const { tasks } = useTasks();
+  const { tasks, deleteTask, updateTask } = useTasks();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   // Filter tasks for current user (in a real app, you'd have user assignment)
   const myTasks = tasks.filter(task => task.status !== 'Done');
@@ -27,6 +36,41 @@ const Dashboard = () => {
   const todoTasks = tasks.filter(task => task.status === 'To Do');
 
   const recentProjects = projects.slice(0, 3);
+
+  const handleDeleteClick = (task) => {
+    setTaskToDelete(task);
+    setDeleteModalOpen(true);
+    setActiveDropdown(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (taskToDelete) {
+      deleteTask(taskToDelete.id);
+      setDeleteModalOpen(false);
+      setTaskToDelete(null);
+    }
+  };
+
+  const handleStatusChange = (taskId, newStatus) => {
+    updateTask(taskId, { status: newStatus });
+    setActiveDropdown(null);
+  };
+
+  const toggleDropdown = (taskId) => {
+    setActiveDropdown(activeDropdown === taskId ? null : taskId);
+  };
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (activeDropdown && !event.target.closest('.task-dropdown')) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [activeDropdown]);
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
@@ -169,9 +213,34 @@ const Dashboard = () => {
                         </span>
                       </div>
                     </div>
-                    <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded">
-                      <MoreHorizontal className="w-4 h-4 text-gray-400" />
-                    </button>
+                    <div className="relative task-dropdown">
+                      <button
+                        onClick={() => toggleDropdown(task.id)}
+                        className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                      >
+                        <MoreHorizontal className="w-4 h-4" />
+                      </button>
+                      {activeDropdown === task.id && (
+                        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
+                          <div className="py-1">
+                            <Link
+                              to={`/todos?task=${task.id}`}
+                              className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                            >
+                              <Eye className="w-4 h-4 mr-3" />
+                              View Details
+                            </Link>
+                            <button
+                              onClick={() => handleDeleteClick(task)}
+                              className="flex w-full items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                            >
+                              <Trash2 className="w-4 h-4 mr-3" />
+                              Delete Task
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -269,6 +338,18 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      <ConfirmModal
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setTaskToDelete(null);
+        }}
+        onConfirm={handleConfirmDelete}
+        title="Delete Task"
+        message={`Are you sure you want to delete "${taskToDelete?.title}"? This action cannot be undone.`}
+      />
     </div>
   );
 };

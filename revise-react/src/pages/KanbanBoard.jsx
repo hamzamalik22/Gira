@@ -6,6 +6,7 @@ import KanbanColumn from '../components/KanbanColumn';
 import TaskModal from '../components/TaskModal';
 import FilterControls from '../components/FilterControls';
 import SearchBar from '../components/SearchBar';
+import ConfirmModal from '../components/ConfirmModal';
 import { 
   Plus, 
   CheckSquare, 
@@ -34,6 +35,8 @@ const TodosPage = () => {
   const [filters, setFilters] = useState({ priority: null, assignee: null });
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   const columns = {
     'to-do': {
@@ -85,8 +88,21 @@ const TodosPage = () => {
     setEditingTask(null);
   };
 
+  const handleDeleteClick = (task) => {
+    setTaskToDelete(task);
+    setDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (taskToDelete) {
+      deleteTask(taskToDelete.id);
+      setDeleteModalOpen(false);
+      setTaskToDelete(null);
+    }
+  };
+
   const handleDeleteTask = (columnId, taskId) => {
-    deleteTask(taskId);
+    handleDeleteClick(columns[columnId].tasks.find(task => task.id === taskId));
   };
 
   const handleFilterChange = (name, value) => {
@@ -258,6 +274,18 @@ const TodosPage = () => {
           setEditingTask(null);
         }}
         projectId={null} // Personal tasks don't have a project
+      />
+
+      {/* Confirmation Modal */}
+      <ConfirmModal
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setTaskToDelete(null);
+        }}
+        onConfirm={handleConfirmDelete}
+        title="Delete Task"
+        message={`Are you sure you want to delete "${taskToDelete?.title}"? This action cannot be undone.`}
       />
     </div>
   );
